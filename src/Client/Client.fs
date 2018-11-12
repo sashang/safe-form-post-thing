@@ -42,8 +42,7 @@ let authUser model =
         let body = Encode.Auto.toString(0, model)
 
         let props =
-            [ RequestProperties.Method HttpMethod.POST
-              Fetch.requestHeaders [
+            [ Fetch.requestHeaders [
                   HttpRequestHeaders.ContentType "application/json" ]
               RequestProperties.Body !^body ]
 
