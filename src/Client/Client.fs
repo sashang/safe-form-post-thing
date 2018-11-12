@@ -89,14 +89,14 @@ let view (model : Model) (dispatch : Msg -> unit) =
                     span [ClassName "glyphicon glyphicon-asterisk"] []
                 ]
                 form [] [
-                    input [
-                        Id "username"
-                        Key ("username" + model.username)
-                        HTMLAttr.Type "username"
-                        ClassName "form-control input-lg"
-                        Placeholder "usernaem"
-                        DefaultValue model.username
-                        OnChange (fun ev -> dispatch (SetUsername ev.Value)) ] 
+                    Field.div [ ]
+                        [ Control.div [ ]
+                            [ Input.text
+                                [ Input.Size IsLarge
+                                  Input.Placeholder "Username"
+                                  Input.Props [ 
+                                    AutoFocus true
+                                    OnChange (fun ev -> dispatch (SetUsername ev.Value)) ] ] ] ]
                     Button.button [
                           Button.Color IsPrimary
                           Button.IsFullWidth
