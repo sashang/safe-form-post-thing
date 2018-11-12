@@ -71,32 +71,6 @@ let update (msg : Msg) (model : Model) : Model * Cmd<Msg> =
     | AuthError err ->
         failwithf("failed to lgin")
 
-
-let safeComponents =
-    let components =
-        span [ ]
-           [
-             a [ Href "https://saturnframework.github.io" ] [ str "Saturn" ]
-             str ", "
-             a [ Href "http://fable.io" ] [ str "Fable" ]
-             str ", "
-             a [ Href "https://elmish.github.io/elmish/" ] [ str "Elmish" ]
-             str ", "
-             a [ Href "https://mangelmaxime.github.io/Fulma" ] [ str "Fulma" ]
-           ]
-
-    p [ ]
-        [ strong [] [ str "SAFE Template" ]
-          str " powered by: "
-          components ]
-
-let button txt onClick =
-    Button.button
-        [ Button.IsFullWidth
-          Button.Color IsPrimary
-          Button.OnClick onClick ]
-        [ str txt ]
-
 let view (model : Model) (dispatch : Msg -> unit) =
     div [] [
         Navbar.navbar [ Navbar.Color IsPrimary ] [
