@@ -42,7 +42,8 @@ let authUser model =
         let body = Encode.Auto.toString(0, model)
 
         let props =
-            [ Fetch.requestHeaders [
+            [ RequestProperties.Method HttpMethod.POST
+              Fetch.requestHeaders [
                   HttpRequestHeaders.ContentType "application/json" ]
               RequestProperties.Body !^body ]
 
@@ -72,31 +73,6 @@ let update (msg : Msg) (model : Model) : Model * Cmd<Msg> =
         failwithf("failed to lgin")
 
 
-let safeComponents =
-    let components =
-        span [ ]
-           [
-             a [ Href "https://saturnframework.github.io" ] [ str "Saturn" ]
-             str ", "
-             a [ Href "http://fable.io" ] [ str "Fable" ]
-             str ", "
-             a [ Href "https://elmish.github.io/elmish/" ] [ str "Elmish" ]
-             str ", "
-             a [ Href "https://mangelmaxime.github.io/Fulma" ] [ str "Fulma" ]
-           ]
-
-    p [ ]
-        [ strong [] [ str "SAFE Template" ]
-          str " powered by: "
-          components ]
-
-let button txt onClick =
-    Button.button
-        [ Button.IsFullWidth
-          Button.Color IsPrimary
-          Button.OnClick onClick ]
-        [ str txt ]
-
 let view (model : Model) (dispatch : Msg -> unit) =
     div [] [
         Navbar.navbar [ Navbar.Color IsPrimary ] [
@@ -114,21 +90,19 @@ let view (model : Model) (dispatch : Msg -> unit) =
                 span [ClassName "input-group-addon" ] [
                     span [ClassName "glyphicon glyphicon-asterisk"] []
                 ]
-                form [] [
-                    input [
-                        Id "username"
-                        Key ("username" + model.username)
-                        HTMLAttr.Type "username"
-                        ClassName "form-control input-lg"
-                        Placeholder "usernaem"
-                        DefaultValue model.username
-                        OnChange (fun ev -> dispatch (SetUsername ev.Value)) ] 
-                    Button.button [
-                          Button.Color IsPrimary
-                          Button.IsFullWidth
-                          Button.OnClick (fun _ -> (dispatch ClickLogin))
-                          Button.CustomClass "is-large is-block" ] [ str "Login" ] 
-               ]
+                input [
+                    Id "username"
+                    Key ("username" + model.username)
+                    HTMLAttr.Type "username"
+                    ClassName "form-control input-lg"
+                    Placeholder "username"
+                    DefaultValue ""
+                    OnChange (fun ev -> dispatch (SetUsername ev.Value)) ] 
+                Button.button [
+                      Button.Color IsPrimary
+                      Button.IsFullWidth
+                      Button.OnClick (fun _ -> (dispatch ClickLogin))
+                      Button.CustomClass "is-large is-block" ] [ str "Login" ] 
             ]
         ]
     ]
